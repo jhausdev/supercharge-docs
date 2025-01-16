@@ -1,11 +1,11 @@
 ---
 swagger: '2.0'
 info:
-  title: EV Charging Middleware API
+  title: Supercharge API
   description: API zur Verwaltung von EV-Ladestationen
-  version: 1.0.0
+  version: 2.0.0
 host: api.evcharging.com
-basePath: /v1
+basePath: /v2
 schemes:
   - https
 paths:
@@ -41,23 +41,6 @@ paths:
         '400':
           description: Fehlerhafte Anfrage
 
-  /locations/{id}:
-    get:
-      summary: Details eines Standorts abrufen
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-          description: ID des abzurufenden Standorts
-      responses:
-        '200':
-          description: Erfolgreiche Antwort
-          schema:
-            $ref: '#/definitions/Location'
-        '404':
-          description: Standort nicht gefunden
-
   /connectors:
     get:
       summary: Liste der Anschlüsse nach Standort abrufen
@@ -88,11 +71,6 @@ paths:
           required: true
           type: string
           description: ID des zu entsperrenden Anschlusses
-        - name: triggerRef
-          in: query
-          required: false
-          type: string
-          description: Optionale Referenz zur Nachverfolgung der Entsperrung
         - name: body
           in: body
           required: true
@@ -106,6 +84,9 @@ paths:
               limitMinutes:
                 type: integer
                 description: Optionale Begrenzung in Minuten
+              triggerRef:
+                type: string
+                description: Referenz zur Nachverfolgung der Entsperrung
       responses:
         '200':
           description: Anschluss erfolgreich entsperrt
